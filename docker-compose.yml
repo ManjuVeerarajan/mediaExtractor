@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    image: media-extractor-backend
+    ports:
+    - "8080:8080"
+    environment:
+    - SPRING_PROFILES_ACTIVE=prod # Optional: Set profile if needed
+    networks:
+    - app-network
+
+  frontend:
+    build: ./frontend
+    image: media-extractor-frontend
+    ports:
+    - "3000:80"
+    depends_on:
+    - backend
+    networks:
+    - app-network
+
+networks:
+  app-network:
+    driver: bridge
